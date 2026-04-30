@@ -11,11 +11,12 @@ var fret = 0
 func _input(event):
 	if event is InputEventMouseMotion:
 		var current_y = event.position.y
-		
+		var speed = abs(current_y - last_mouse_y)
+
 		if abs(current_y - global_position.y) < 10:
-			if abs(current_y - last_mouse_y) > 5:
-				pluck()
-		
+			if speed > 5:
+				pluck_with_strength(speed)
+
 		last_mouse_y = current_y
 		
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -28,6 +29,10 @@ func _input(event):
 
 func _process(delta):
 	amplitude *= decay
+	
+	if amplitude < 0.1:
+		amplitude = 0
+		
 	update_string()
 
 func update_pitch():
@@ -43,6 +48,17 @@ func pluck():
 	audio.stop()
 	audio.play()
 	amplitude = 20
+	
+func pluck_with_strength(speed):
+	update_pitch()
+	audio.stop()
+	audio.play()
+
+	amplitude = clamp(speed * 0.5, 10, 40)
+
+	audio.volume_db = linear_to_db(clamp(speed / 50.0, 0.1, 1.0))
+
+	line.width = clamp(speed / 5, 2, 6)
 
 func update_string():
 	var points = []
