@@ -13,7 +13,7 @@ A simple guitar simulator made with Godot.
 
 ## Demo Video 🎥
 
-[Watch Demo](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+[Watch Demo](https://youtu.be/oltpae6-jTo?si=cJBAAGNOL-znx5oz)
 
 ## Controls
 
